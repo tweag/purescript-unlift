@@ -1,4 +1,6 @@
 { name = "unlift"
+, license = "MIT"
+, repository = "https://github.com/tweag/purescript-unlift.git"
 , dependencies =
   [ "aff"
   , "effect"

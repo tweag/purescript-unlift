@@ -33,7 +33,7 @@
           inherit (gitignore.lib) gitignoreSource;
           inherit (easy-ps) dhall-simple purs-tidy spago psa purs;
           inherit (pkgs) git writeShellScriptBin nodePackages mkShell nodejs nixpkgs-fmt;
-          inherit (nodePackages) prettier;
+          inherit (nodePackages) bower prettier;
           inherit (builtins) concatStringsSep;
 
           src = gitignoreSource ./.;
@@ -167,6 +167,8 @@
               nixpkgs-fmt
               rnix-lsp.defaultPackage."${system}"
               test
+              prettier
+              bower
             ] ++ easy-ps.buildInputs;
             inherit (pre-commit-check) shellHook;
           };
