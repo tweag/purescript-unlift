@@ -5,6 +5,7 @@ generated-docs/
 .spago
 .spago2nix
 .psa-stash
+.pre-commit*
 .psc-ide-port
 .direnv
 .envrc
