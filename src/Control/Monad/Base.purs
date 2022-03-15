@@ -95,6 +95,11 @@ instance MonadBase b m => MonadBase b (ContT r m) where
 instance (Monoid w, MonadBase b m) => MonadBase b (RWST r w s m) where
   liftBase = liftBaseDefault
 
+-- | A default implementation of `liftBase` which is defined as 
+-- |
+-- | ```purescript
+-- | lift <<< liftBase
+-- | ```
 liftBaseDefault
   :: forall t m b. MonadTrans t => Monad m => MonadBase b m => b ~> t m
 liftBaseDefault = lift <<< liftBase

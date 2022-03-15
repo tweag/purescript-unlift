@@ -46,18 +46,34 @@ instance MonadUnliftEffect m => MonadUnliftEffect (IdentityT m) where
       runAction \(IdentityT a) ->
         runMInEffect a
 
+-- | A newtype wrapper around a natural transformation from `m` to `Effect`.
 newtype UnliftEffect m = UnliftEffect (m ~> Effect)
 
+-- | Run an action directly in `Effect`. Use `askUnliftEffect` or
+-- | `withUnliftEffect` to obtain an `UnliftEffect m` value.
+unliftEffect :: forall m. UnliftEffect m -> m ~> Effect
+unliftEffect (UnliftEffect run) = run
+
+-- | Returns a natural transformation from `m` to `Effect` within an `m` context.
+-- | This can subsequently be used to run `m` actions directly in `Effect`.
 askUnliftEffect :: forall m. MonadUnliftEffect m => m (UnliftEffect m)
 askUnliftEffect = withRunInEffect \run -> pure $ UnliftEffect run
 
+-- | A monomorphic version of askUnliftEffect which can be more convenient when
+-- | you only want to use the resulting runner function once with a concrete
+-- | type.
+-- |
+-- | If you run into type issues using this, try using `askUnlitEffect` instead.
 askRunInEffect :: forall m a. MonadUnliftEffect m => m (m a -> Effect a)
 askRunInEffect = withRunInEffect pure
 
+-- | A version of `withRunInEffect` that provides an `UnliftEffect` wrapper
+-- | instead of a rank-2 polymorphic function.
 withUnliftEffect
   :: forall m a. MonadUnliftEffect m => (UnliftEffect m -> Effect a) -> m a
 withUnliftEffect runAction =
   withRunInEffect \run -> runAction $ UnliftEffect run
 
+-- | Run the given action inside the `Effect` monad.
 toEffect :: forall m a. MonadUnliftEffect m => m a -> m (Effect a)
 toEffect m = withRunInEffect \run -> pure $ run m

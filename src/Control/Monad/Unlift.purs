@@ -14,16 +14,16 @@ import Data.Maybe (Maybe)
 import Effect (Effect)
 import Effect.Aff (Aff)
 
--- | Monads which allow their actions to be run in their base monad.
+-- | Monads which allow their actions to be run in a base monad.
 -- |
 -- | `MonadUnlift` captures the opposite notion of `MonadBase` - while
--- | `MonadBase` allows an base monad `b` to be lifted into another monad `m`,
--- | `MonadUnlift` allows a `m` to be run in `b`, as long as contained in an
--- | outer `m` context.
+-- | `MonadBase` allows any base monad `b` to be lifted into a transformed monad
+-- | `m`, `MonadUnlift` allows `m` to be run in `b`, as long as the outer
+-- | context is in `m`.
 -- |
 -- | Note that the laws given below require that a monad have no "monadic
 -- | state", which essentially limits instances to `ReaderT` and `IdentityT`
--- | stacks with a base of `b`.
+-- | stacks.
 -- |
 -- | Instances should satisfy the following laws, which state that
 -- | `unlift` is a transformer of monads for any given `u` returned by
@@ -78,17 +78,32 @@ instance MonadUnlift b m => MonadUnlift b (IdentityT m) where
       runAction \(IdentityT a) ->
         runMInBase a
 
+-- | A newtype wrapper around a natural transformation from `m` to `b`.
 newtype Unlift :: forall k. (k -> Type) -> (k -> Type) -> Type
 newtype Unlift b m = Unlift (m ~> b)
 
+-- | Run an action directly in a base monad `b`. Use `askUnlift` or `withUnlift`
+-- | to obtain an `Unlift b m` value.
+unlift :: forall b m. Unlift b m -> m ~> b
+unlift (Unlift run) = run
+
+-- | Returns a natural transformation from `m` to `b` within an `m` context.
+-- | This can subsequently be used to run `m` actions in the base monad `b`.
 askUnlift :: forall b m. MonadUnlift b m => m (Unlift b m)
 askUnlift = withRunInBase \run -> pure $ Unlift run
 
+-- | A monomorphic version of askUnlift which can be more convenient when you
+-- | only want to use the resulting runner function once with a concrete type.
+-- |
+-- | If you run into type issues using this, try using `askUnlit` instead.
 askRunInBase :: forall b m a. MonadUnlift b m => m (m a -> b a)
 askRunInBase = withRunInBase pure
 
+-- | A version of `withRunInBase` that provides an `Unlift` wrapper instead of
+-- | a rank-2 polymorphic function.
 withUnlift :: forall b m a. MonadUnlift b m => (Unlift b m -> b a) -> m a
 withUnlift runAction = withRunInBase \run -> runAction $ Unlift run
 
+-- | Run the given action inside the base monad `b`.
 toBase :: forall b m a. MonadUnlift b m => m a -> m (b a)
 toBase m = withRunInBase \run -> pure $ run m

@@ -1,5 +1,6 @@
 output/
 bower_components/
+generated-docs/
 .psci*
 .spago
 .spago2nix
