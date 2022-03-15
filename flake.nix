@@ -135,7 +135,7 @@
               nativeBuildInputs = [ psa purs nodejs ];
               inherit src;
               unpackPhase = ''
-                cp $src .
+                cp -r $src .
                 install-spago-style
               '';
               buildPhase = ''
@@ -151,7 +151,7 @@
               doCheck = true;
               checkPhase = ''
                 psa compile ${psa-args} ${spagoSources} "./src/**/*.purs" "./test/**/*.purs"
-                node ./test.js
+                node $src/test.js
               '';
             };
 
