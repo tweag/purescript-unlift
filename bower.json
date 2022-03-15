@@ -1,0 +1,27 @@
+{
+    "name": "purescript-unlift",
+    "license": [
+        "MIT"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/tweag/purescript-unlift.git"
+    },
+    "ignore": [
+        "**/.*",
+        "node_modules",
+        "bower_components",
+        "output"
+    ],
+    "dependencies": {
+        "purescript-aff": "^v6.0.0",
+        "purescript-effect": "^v3.0.0",
+        "purescript-either": "^v5.0.0",
+        "purescript-identity": "^v5.0.0",
+        "purescript-lists": "^v6.0.1",
+        "purescript-maybe": "^v5.0.0",
+        "purescript-prelude": "^v5.0.1",
+        "purescript-st": "^v5.0.1",
+        "purescript-transformers": "^v5.2.0"
+    }
+}
