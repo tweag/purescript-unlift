@@ -41,6 +41,18 @@ let
         installPhase = "ln -s $src $out";
       };
 
+    "catenable-lists" = pkgs.stdenv.mkDerivation {
+        name = "catenable-lists";
+        version = "v6.0.1";
+        src = pkgs.fetchgit {
+          url = "https://github.com/purescript/purescript-catenable-lists.git";
+          rev = "ee03395f2c5d59a7fd8529a0faac6ec1ebcbb682";
+          sha256 = "1lz06fx0za5sl65wccn5fl37mw3x4jnvrriz1gg0aqsmm9lag7ss";
+        };
+        phases = "installPhase";
+        installPhase = "ln -s $src $out";
+      };
+
     "const" = pkgs.stdenv.mkDerivation {
         name = "const";
         version = "v5.0.0";
@@ -173,6 +185,30 @@ let
         installPhase = "ln -s $src $out";
       };
 
+    "free" = pkgs.stdenv.mkDerivation {
+        name = "free";
+        version = "v6.2.0";
+        src = pkgs.fetchgit {
+          url = "https://github.com/purescript/purescript-free.git";
+          rev = "c185c0b2144ddfb2bc3ac2b345df32e33221b21d";
+          sha256 = "10zsw49wzlzz78882b3grl19gpca5llpdk3ph608075h0ygk3q3k";
+        };
+        phases = "installPhase";
+        installPhase = "ln -s $src $out";
+      };
+
+    "freet" = pkgs.stdenv.mkDerivation {
+        name = "freet";
+        version = "v6.0.0";
+        src = pkgs.fetchgit {
+          url = "https://github.com/purescript-contrib/purescript-freet.git";
+          rev = "507c2edd9173cda5ad44dd0638133edd69fd9acd";
+          sha256 = "0f5bibw604sd9ffmp51b3jppka88r54mh7sdz91zy5b92wgsy5yr";
+        };
+        phases = "installPhase";
+        installPhase = "ln -s $src $out";
+      };
+
     "functions" = pkgs.stdenv.mkDerivation {
         name = "functions";
         version = "v5.0.0";
@@ -288,6 +324,18 @@ let
           url = "https://github.com/purescript/purescript-maybe.git";
           rev = "8e96ca0187208e78e8df6a464c281850e5c9400c";
           sha256 = "0vyk3r9gklvv7awzpph7ra53zxxbin1ngmqflb5vvr2365v5xyqy";
+        };
+        phases = "installPhase";
+        installPhase = "ln -s $src $out";
+      };
+
+    "monad-control" = pkgs.stdenv.mkDerivation {
+        name = "monad-control";
+        version = "v5.0.0";
+        src = pkgs.fetchgit {
+          url = "https://github.com/athanclark/purescript-monad-control.git";
+          rev = "9684a6955af3bc32550bed2aee7f63869b04bd46";
+          sha256 = "0czwzn59iscp2796k2hn4nqhaydi3f7pif8bgdd7276ajkzzay5c";
         };
         phases = "installPhase";
         installPhase = "ln -s $src $out";
