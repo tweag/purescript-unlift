@@ -17,11 +17,14 @@
         "purescript-aff": "^v6.0.0",
         "purescript-effect": "^v3.0.0",
         "purescript-either": "^v5.0.0",
+        "purescript-freet": "^v6.0.0",
         "purescript-identity": "^v5.0.0",
         "purescript-lists": "^v6.0.1",
         "purescript-maybe": "^v5.0.0",
+        "purescript-monad-control": "^v5.0.0",
         "purescript-prelude": "^v5.0.1",
         "purescript-st": "^v5.0.1",
-        "purescript-transformers": "^v5.2.0"
+        "purescript-transformers": "^v5.2.0",
+        "purescript-tuples": "^v6.0.1"
     }
 }

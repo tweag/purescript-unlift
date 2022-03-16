@@ -4,13 +4,14 @@
 [![Build status](https://github.com/purescript/purescript-unlift/workflows/CI/badge.svg?branch=main)](https://github.com/purescript/purescript-unlift/actions?query=workflow%3ACI+branch%3Amain)
 [![Pursuit](https://pursuit.purescript.org/packages/purescript-unlift/badge)](https://pursuit.purescript.org/packages/purescript-unlift)
 
-Standard library for working with monads at the base of a transformer stack.
-`MonadBase` allow any base monad to be lifted into a transformed monad à la
-`MonadEffect` and `MonadAff`. `MonadUnliftEffect`, `MonadUnliftAff`, and
-`MonadUnlift` allow running a stateless transformed monad inside of a base
-monad. Based on:
+Classes that allow stateless monads to be "unlifted" into a base monad.
 
-- [transformers-base](http://hackage.haskell.org/package/transformers-base)
+- `MonadUnliftEffect`: Run any compatible monad in `Effect`
+- `MonadUnliftAff`: Run any compatible monad in `Aff`
+- `MonadUnlift`: Run any compatible monad in any base monad.
+
+Based on:
+
 - [unliftio](http://hackage.haskell.org/package/unliftio)
 - [unlift](http://hackage.haskell.org/package/unlift)
 
@@ -23,4 +24,3 @@ spago install unlift
 ## Documentation
 
 Module documentation is [published on Pursuit](http://pursuit.purescript.org/packages/purescript-unlift).
-

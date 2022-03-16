@@ -5,12 +5,15 @@
   [ "aff"
   , "effect"
   , "either"
+  , "freet"
   , "identity"
   , "lists"
   , "maybe"
+  , "monad-control"
   , "prelude"
   , "st"
   , "transformers"
+  , "tuples"
   ]
 , packages = ./packages.dhall
 , sources = [ "src/**/*.purs" ]

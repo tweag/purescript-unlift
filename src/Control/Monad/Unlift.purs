@@ -3,14 +3,12 @@ module Control.Monad.Unlift where
 import Prelude
 
 import Control.Monad.Base (class MonadBase)
-import Control.Monad.Identity.Trans (IdentityT(..))
 import Control.Monad.Reader (ReaderT(..))
-import Control.Monad.ST (ST)
 import Data.Either (Either)
 import Data.Identity (Identity)
 import Data.List (List)
-import Data.List.Lazy as LL
 import Data.Maybe (Maybe)
+import Data.Tuple (Tuple)
 import Effect (Effect)
 import Effect.Aff (Aff)
 
@@ -45,9 +43,6 @@ instance MonadUnlift Array Array where
 instance MonadUnlift List List where
   withRunInBase runAction = runAction identity
 
-instance MonadUnlift LL.List LL.List where
-  withRunInBase runAction = runAction identity
-
 instance MonadUnlift Maybe Maybe where
   withRunInBase runAction = runAction identity
 
@@ -63,7 +58,7 @@ instance MonadUnlift Identity Identity where
 instance MonadUnlift (Either e) (Either e) where
   withRunInBase runAction = runAction identity
 
-instance MonadUnlift (ST s) (ST s) where
+instance Monoid a => MonadUnlift (Tuple a) (Tuple a) where
   withRunInBase runAction = runAction identity
 
 instance MonadUnlift b m => MonadUnlift b (ReaderT r m) where
@@ -72,11 +67,12 @@ instance MonadUnlift b m => MonadUnlift b (ReaderT r m) where
       runAction \(ReaderT reader) ->
         runMInBase $ reader context
 
-instance MonadUnlift b m => MonadUnlift b (IdentityT m) where
-  withRunInBase runAction = IdentityT $
-    withRunInBase \runMInBase ->
-      runAction \(IdentityT a) ->
-        runMInBase a
+-- TODO add MonadBase instance for IdentityT
+-- instance MonadUnlift b m => MonadUnlift b (IdentityT m) where
+--   withRunInBase runAction = IdentityT $
+--     withRunInBase \runMInBase ->
+--       runAction \(IdentityT a) ->
+--         runMInBase a
 
 -- | A newtype wrapper around a natural transformation from `m` to `b`.
 newtype Unlift :: forall k. (k -> Type) -> (k -> Type) -> Type
