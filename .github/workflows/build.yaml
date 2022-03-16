@@ -1,13 +1,13 @@
 name: Build
 env:
-  CACHE_NAME: marlowe-temp
+  CACHE_NAME: purescript-unlift
   TRUSTED_PUBLIC_KEYS: "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= purescript-unlift.cachix.org-1:1gPjVFpu4QjaAT3tRurCioX+BC23V7mjvFwpP5bV0Ec="
   SUBSTITUTERS: "https://cache.nixos.org/ https://purescript-unlift.cachix.org"
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
   workflow_dispatch:
 
 jobs:
@@ -26,5 +26,5 @@ jobs:
       - uses: cachix/cachix-action@v10
         with:
           name: ${{ env.CACHE_NAME }}
-          authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
+          authToken: "${{ secrets.TWEAG_CACHIX_AUTH_TOKEN }}"
       - run: nix build
