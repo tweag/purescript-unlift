@@ -98,7 +98,7 @@
             echo done.
           '';
 
-          psa-args = "--strict --stash --censor-lib";
+          psa-args = "--strict --stash --censor-lib --is-lib=.spago";
 
           runSpago = cmd: ''
             ${spago}/bin/spago ${cmd} --purs-args "${psa-args} --stash"
@@ -150,6 +150,7 @@
               '';
               doCheck = true;
               checkPhase = ''
+                set -e
                 psa compile ${psa-args} ${spagoSources} "./src/**/*.purs" "./test/**/*.purs"
                 node $src/test.js
               '';
