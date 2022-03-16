@@ -135,7 +135,7 @@
               nativeBuildInputs = [ psa purs nodejs ];
               inherit src;
               unpackPhase = ''
-                cp -r $src .
+                cp -r $src/* .
                 install-spago-style
               '';
               buildPhase = ''
